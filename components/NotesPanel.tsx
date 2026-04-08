@@ -297,12 +297,11 @@ export default function NotesPanel({
           </div>
         </form>
 
-        {!compact ? (
-          <div className="space-y-3">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-stone-500 dark:text-stone-400">
-                This month
+                {compact ? "Saved notes" : "This month"}
               </p>
               <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">
                 {visibleNotes.length} saved {visibleNotes.length === 1 ? "note" : "notes"}
@@ -317,6 +316,7 @@ export default function NotesPanel({
             visibleNotes
               .slice()
               .reverse()
+              .slice(0, compact ? 3 : visibleNotes.length)
               .map((note) => {
                 const subtitle =
                   note.scope === "month"
@@ -331,14 +331,17 @@ export default function NotesPanel({
                 return (
                   <article
                     key={note.id}
-                    className="rounded-[1.5rem] border border-stone-200 bg-stone-50/80 p-4 shadow-sm dark:border-stone-800 dark:bg-stone-950/80"
+                    className={[
+                      "rounded-[1.5rem] border border-stone-200 bg-stone-50/80 shadow-sm dark:border-stone-800 dark:bg-stone-950/80",
+                      compact ? "p-3" : "p-4"
+                    ].join(" ")}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-xs uppercase tracking-[0.3em] text-stone-500 dark:text-stone-400">
                           {note.scope}
                         </p>
-                        <h3 className="mt-1 text-base font-semibold">{note.title}</h3>
+                        <h3 className={compact ? "mt-1 text-sm font-semibold" : "mt-1 text-base font-semibold"}>{note.title}</h3>
                         <p className="text-xs text-stone-500 dark:text-stone-400">{subtitle}</p>
                       </div>
                       <div className="flex shrink-0 items-center gap-2">
@@ -358,15 +361,19 @@ export default function NotesPanel({
                         </button>
                       </div>
                     </div>
-                    <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-stone-700 dark:text-stone-300">
+                    <p
+                      className={[
+                        "mt-3 whitespace-pre-wrap text-stone-700 dark:text-stone-300",
+                        compact ? "line-clamp-2 text-xs leading-5" : "text-sm leading-6"
+                      ].join(" ")}
+                    >
                       {note.content}
                     </p>
                   </article>
                 );
               })
           )}
-          </div>
-        ) : null}
+        </div>
       </div>
     </aside>
   );

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply min-h-screen bg-stone-100 text-stone-900 antialiased transition-colors duration-300 dark:bg-stone-950 dark:text-stone-100;
+  background-image:
+    radial-gradient(circle at top, rgba(212, 181, 125, 0.22), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(231, 229, 228, 0.4));
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at top, rgba(212, 181, 125, 0.16), transparent 28%),
+    linear-gradient(135deg, rgba(17, 24, 39, 0.92), rgba(12, 10, 9, 0.88));
+}
+
+* {
+  scrollbar-width: thin;
+}
